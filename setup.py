@@ -78,7 +78,7 @@ def main():
         os.remove('MANIFEST')
 
     kwargs = {
-        'name': "pyodbc",
+        'name': "Pyodbc_Knight",
         'version': version_str,
         'description': "DB API Module for ODBC",
 
@@ -88,15 +88,13 @@ def main():
         'maintainer':       "Michael Kleehammer",
         'maintainer_email': "michael@kleehammer.com",
 
-        'ext_modules': [Extension('pyodbc', sorted(files), **settings)],
+        'ext_modules': [Extension('Pyodbc_Knight', sorted(files), **settings)],
 
         'data_files': [
             ('', ['src/pyodbc.pyi'])  # places pyodbc.pyi alongside pyodbc.py in site-packages
         ],
 
         'license': 'MIT',
-
-        'python_requires': '>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*',
 
         'classifiers': ['Development Status :: 5 - Production/Stable',
                        'Intended Audience :: Developers',
@@ -108,11 +106,10 @@ def main():
                        'Programming Language :: Python :: 2',
                        'Programming Language :: Python :: 2.7',
                        'Programming Language :: Python :: 3',
+                       'Programming Language :: Python :: 3.5',
                        'Programming Language :: Python :: 3.6',
                        'Programming Language :: Python :: 3.7',
                        'Programming Language :: Python :: 3.8',
-                       'Programming Language :: Python :: 3.9',
-                       'Programming Language :: Python :: 3.10',
                        'Topic :: Database',
                        ],
 

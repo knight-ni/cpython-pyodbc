@@ -16,6 +16,11 @@
 #define SQL_DB2_XML -370        // IBM DB/2 XML type
 #define SQL_SS_TIME2 -154       // SQL Server 2008 time type
 
+// Informix
+
+#define SQL_BIGSERIAL -114
+#define SQL_JSON -101
+
 struct SQL_SS_TIME2_STRUCT
 {
    SQLUSMALLINT hour;

@@ -915,6 +915,8 @@ static const ConstantDef aConstants[] = {
     MAKECONST(SQL_NULLABLE),
     MAKECONST(SQL_NO_NULLS),
     MAKECONST(SQL_NULLABLE_UNKNOWN),
+    MAKECONST(SQL_BIGSERIAL),
+    MAKECONST(SQL_JSON),
     // MAKECONST(SQL_INDEX_BTREE),
     // MAKECONST(SQL_INDEX_CLUSTERED),
     // MAKECONST(SQL_INDEX_CONTENT),
@@ -1197,9 +1199,9 @@ static struct PyModuleDef moduledef = {
 
 PyMODINIT_FUNC
 #if PY_MAJOR_VERSION >= 3
-PyInit_pyodbc()
+PyInit_Pyodbc_Knight()
 #else
-initpyodbc(void)
+initPyodbc_Knight(void)
 #endif
 {
     ErrorInit();

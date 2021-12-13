@@ -38,6 +38,8 @@ const char* SqlTypeName(SQLSMALLINT n)
         _MAKESTR(SQL_BINARY);
         _MAKESTR(SQL_VARBINARY);
         _MAKESTR(SQL_LONGVARBINARY);
+        _MAKESTR(SQL_BIGSERIAL);
+        _MAKESTR(SQL_JSON);
     }
     return "unknown";
 }

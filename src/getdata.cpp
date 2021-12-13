@@ -299,6 +299,33 @@ static PyObject* GetBinary(Cursor* cur, Py_ssize_t iCol)
     return obj;
 }
 
+static PyObject* GetDataJson(Cursor* cur, Py_ssize_t iCol)
+{
+    // Reads SQL_BINARY.
+
+    bool isNull = false;
+    byte* pbData = '\0';
+    Py_ssize_t cbData = 0;
+    if (!ReadVarColumn(cur, iCol, SQL_C_BINARY, isNull, pbData, cbData))
+        return 0;
+
+    if (isNull)
+    {
+        I(pbData == 0 && cbData == 0);
+        Py_RETURN_NONE;
+    }
+
+    PyObject* obj;
+#if PY_MAJOR_VERSION >= 3
+    //obj = PyBytes_FromStringAndSize((char*)pbData, cbData);
+    obj = PyUnicode_FromStringAndSize((char*)pbData, cbData);
+#else
+    //obj = PyByteArray_FromStringAndSize((char*)pbData, cbData);
+    obj = PyUnicode_FromStringAndSize((char*)pbData, cbData);
+#endif
+    pyodbc_free(pbData);
+    return obj;
+}
 
 static PyObject* GetDataUser(Cursor* cur, Py_ssize_t iCol, int conv)
 {
