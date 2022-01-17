@@ -257,7 +257,6 @@ PyObject* GetErrorFromHandle(Connection *conn, const char* szFunction, HDBC hdbc
         SQLRETURN ret;
         Py_BEGIN_ALLOW_THREADS
         ret = SQLGetDiagRecW(nHandleType, h, iRecord, (SQLWCHAR*)sqlstateT, &nNativeError, (SQLWCHAR*)szMsg, msgLen, &cchMsg);
-        //ret = SQLGetDiagRec(nHandleType, h, iRecord, (SQLCHAR*)sqlstateT, &nNativeError, (SQLCHAR*)szMsg, msgLen, &cchMsg);
         Py_END_ALLOW_THREADS
         if (!SQL_SUCCEEDED(ret))
             break;
@@ -272,7 +271,6 @@ PyObject* GetErrorFromHandle(Connection *conn, const char* szFunction, HDBC hdbc
             }
             Py_BEGIN_ALLOW_THREADS
             ret = SQLGetDiagRecW(nHandleType, h, iRecord, (SQLWCHAR*)sqlstateT, &nNativeError, (SQLWCHAR*)szMsg, msgLen, &cchMsg);
-            //ret = SQLGetDiagRec(nHandleType, h, iRecord, (SQLCHAR*)sqlstateT, &nNativeError, (SQLCHAR*)szMsg, msgLen, &cchMsg);
             Py_END_ALLOW_THREADS
             if (!SQL_SUCCEEDED(ret))
                 break;
@@ -284,8 +282,17 @@ PyObject* GetErrorFromHandle(Connection *conn, const char* szFunction, HDBC hdbc
         // For now, default to UTF-16 if this is not in the context of a connection.
         // Note that this will not work if the DM is using a different wide encoding (e.g. UTF-32).
         const char *unicode_enc = conn ? conn->metadata_enc.name : ENCSTR_UTF16NE;
+        char *tmp =(char *)szMsg;
+        int i;
+        for(i=0;i<cchMsg;i++){
+           if(*tmp==0){
+              cchMsg = i;
+              break;
+           }
+           tmp+=ODBCCHAR_SIZE;
+        }
         Object msgStr(PyUnicode_Decode((char*)szMsg, cchMsg * sizeof(ODBCCHAR), unicode_enc, "strict"));
-        //Object msgStr(PyUnicode_Decode((char*)szMsg, cchMsg , unicode_enc, "strict"));
+        //Object msgStr(PyUnicode_Decode((char*)szMsg, cchMsg, unicode_enc, "strict"));
 
         if (cchMsg != 0 && msgStr.Get())
         {

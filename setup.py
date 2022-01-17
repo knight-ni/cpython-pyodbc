@@ -260,7 +260,6 @@ def get_version():
 
     name    = None              # branch/feature name.  Should be None for official builds.
     numbers = None              # The 4 integers that make up the version.
-
     # If this is a source release the version will have already been assigned and be in the PKG-INFO file.
 
     name, numbers = _get_version_pkginfo()
@@ -274,6 +273,7 @@ def get_version():
         _print('WARNING: Unable to determine version.  Using 4.0.0.0')
         name, numbers = '4.0.0-unsupported', [4,0,0,0]
 
+    name, numbers = '4.0.0.33', [4,0,0,33]
     return name, numbers
 
 

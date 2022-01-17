@@ -11,6 +11,7 @@ import datetime
 import uuid
 
 coding = 'utf-8'
+errcoding = 'utf-16-le'
 
 def string_to_json(unicode_string):
     return json.loads(unicode_string)
@@ -21,7 +22,7 @@ def test():
     conn = pyodbc.connect("DSN=jsvftestdbs")
     conn.setdecoding(pyodbc.SQL_CHAR,encoding=coding)
     conn.setdecoding(pyodbc.SQL_WCHAR, encoding=coding)
-    conn.setdecoding(pyodbc.SQL_WMETADATA, encoding=coding)
+    conn.setdecoding(pyodbc.SQL_WMETADATA, encoding=errcoding)
     conn.setencoding(encoding=coding)
     conn.add_output_converter(pyodbc.SQL_JSON, string_to_json)
     id = ''.join(str(uuid.uuid1()).split('-'))
@@ -50,7 +51,7 @@ def test():
         if i%2 == 0:
             filter.append([id])
             filstr.append("'" + id + "'")
-    mycursor.executemany("insert into tpyodbc(id,name,sex,dt) values(?,?,?,?)", data)
+    mycursor.executemany("insert into tpyodbc(cid,name,sex,dt) values(?,?,?,?)", data)
     mycursor.executemany("insert into tpyodbc_del(id,name,sex,dt) values(?,?,?,?)", data)
     mycursor.executemany("insert into mytmp(id) values(?)", filter)
     conn.commit()
